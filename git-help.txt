@@ -3,3 +3,21 @@
 
 
 //  > git init      инициализация проекта (если гит не инициализирован в проекте)
+//  > git status        проверка статуса
+
+//  > git config --list     проверка пользователя
+//  > git config --global user.email "kozyrev054@gmail.com"     
+//  > git config --global user.name "kozyrev42"
+
+
+//  при первой отправки
+//  > git add .         сканируем все изменения 
+//  > git commit -m "first-commit"      фиксируем все изменения, "first-commit" - наименование коммита
+//  > git remote add origin https://github.com/kozyrev42/git-help.git       при первой отправки
+//  > git push -u origin master         отправка, при первой отправки
+
+
+//  при последующих отправках
+//  > git add .        
+//  > git commit -m "second-commit"    
+//  > git push
