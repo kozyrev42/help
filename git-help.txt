@@ -21,6 +21,7 @@
 //  > git add .        
 //  > git commit -m "second-commit"    
 //  > git push
+или //  > git push origin alex
 
 
 //  > git clone https://gitlab.com/congress-plus/congresswebapp.git         клонирование проекта себе на пк
