@@ -26,3 +26,6 @@
 
 //  > git clone https://gitlab.com/congress-plus/congresswebapp.git         клонирование проекта себе на пк
 //  > git pull        забрать изменения
+
+//  копирование проекта с GitLab
+//  git clone /*адрес проекта копируется с проекта*/ -b /*название копируемой ветки*/
