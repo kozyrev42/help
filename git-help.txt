@@ -5,6 +5,7 @@
 //  > git init      инициализация проекта (если гит не инициализирован в проекте)
 //  > git status        проверка статуса
 
+
 //  > git config --list     проверка пользователя
 //  > git config --global user.email "kozyrev054@gmail.com"     
 //  > git config --global user.name "kozyrev42"
@@ -16,7 +17,6 @@
 //  > git remote add origin https://github.com/kozyrev42/git-help.git       при первой отправки
 //  > git push -u origin master         отправка, при первой отправки
 
-
 //  при последующих отправках
 //  > git add .        
 //  > git commit -m "second-commit"    
@@ -24,8 +24,8 @@
 или //  > git push origin alex
 
 
-//  > git clone https://gitlab.com/congress-plus/congresswebapp.git         клонирование проекта себе на пк
 //  > git pull        забрать изменения
+
 
 //  копирование проекта с GitLab
 //  git clone /*адрес проекта копируется с проекта*/ -b /*название копируемой ветки*/
