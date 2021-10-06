@@ -1,3 +1,16 @@
+// ОПЕРАТОРЫ
+=        - равно
+<>       - не равно
+<        - меньше
+>        - больше
+<=       - меньше-или-равно
+>=       - больше-или-равно
+AND      - оператор "И",  например объединяет условия выборки
+OR       - оператор "ИЛИ"
+
+
+
+
 // БАЗА
 CREATE DATABASE my_db;      // команда создаёт новую базу данных с именем: my_db
 DROP DATABASE my_db;        // удаление базы my_db
@@ -64,13 +77,25 @@ VALUES (
     
  // ВЫБОРКА
  
-SELECT * FROM my_contacts;    // чтение всей таблицы  
+SELECT * FROM my_contacts;            // чтение всей таблицы  
     
+SELECT * 
+    FROM my_contacts                  //   вывод тех строк, при условии что столбец last_name содержит 'Obama' 
+        WHERE last_name = 'Obama';    //   WHERE - ключевое слово, после которого следует условие
+                                    
+SELECT first_name                     // вывод только одного столбца */
+    FROM my_contacts
+        WHERE first_name = 'Alex';   
     
+SELECT *           
+    FROM my_contacts
+        WHERE first_name = 'Leo'
+            AND zarplata > 35;         // оператор AND - объединяет 2 условия выбокри     
     
-    
-    
-    
+SELECT *           
+    FROM my_contacts
+        WHERE zarplata = 10
+            OR zarplata => 35;          // вывод строк - удовлетворяущих любое из указанных условий    
     
     
     
