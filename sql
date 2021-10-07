@@ -171,3 +171,13 @@ UPDATE my_contacts                      //   в таблице my_contacts
     SET zarplata = 50                   //   в столбце 'zarplata' заменяем значение на 25 
         WHERE first_name = 'Leo';       //   при выполнении этого условия   
     
+UPDATE my_contacts
+    SET first_name = 'Luk', zarplata = 25     //   замена нескольких столбцов в записи 
+        WHERE last_name = 'Li';    
+    
+UPDATE my_contacts
+    SET zarplata = 10;          /* назначение значния для всего столбца */
+
+UPDATE my_contacts
+    SET zarplata = zarplata + 1;        /* увеличение текущего значения на 1 */  
+    
