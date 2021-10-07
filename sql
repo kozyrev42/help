@@ -181,3 +181,15 @@ UPDATE my_contacts
 UPDATE my_contacts
     SET zarplata = zarplata + 1;        /* увеличение текущего значения на 1 */  
     
+    
+    
+
+CREATE TABLE my_contacts
+    (
+        id INT NOT NULL AUTO_INCREMENT,             //   поле хранит целые числа, NULL - быть не может 
+        last_name VARCHAR(20) NOT NULL,             //   AUTO_INCREMENT - авто-назначение первичного ключа 
+        first_name VARCHAR(20) NOT NULL,
+        zarplata DEC(6,2) NOT NULL DEFAULT 0.00,
+        PRIMARY KEY (id)                            //   назначается столбец, который будет хранить первичные ключи */
+    );
+
