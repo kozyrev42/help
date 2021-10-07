@@ -5,9 +5,13 @@
 >        - больше
 <=       - меньше-или-равно
 >=       - больше-или-равно
-AND      - оператор "И",  например объединяет условия выборки
-OR       - оператор "ИЛИ"
 
+AND      - оператор "И",  например объединяет условия выборки
+OR       - оператор "ИЛИ" (или 1, или 2, или 3, или ВСЕ)
+LIKE     - даёт возможность поиска по части тескстовой строки
+BETWEEN  -  BETWEEN 30 AND 40; Установка диапазона включительно указанных границ 
+IN       -  IN (10,100);     должно выполниться одно из условий (или 10, или 100, или ВСЕ)
+AND NOT  - 
 
 
 
@@ -97,7 +101,66 @@ SELECT *
         WHERE zarplata = 10
             OR zarplata => 35;          // вывод строк - удовлетворяущих любое из указанных условий    
     
-    
+SELECT *           
+    FROM my_contacts
+        WHERE years IS NULL;      /* вывод строк содержащие NULL */
+
+SELECT *           
+    FROM my_contacts
+        WHERE years IS NOT NULL;      /* вывод строк НЕ содержащие NULL */
+
+
+SELECT *           
+    FROM my_contacts                    /* LIKE - даёт возможность поиска по части тескстовой строки */
+        WHERE first_name LIKE '%o';      /* % - значит может быть любое количество символов перер буквой о */      
+
+SELECT *
+    FROM my_contacts
+        WHERE zarplata
+            BETWEEN 30 AND 40;      /* Установка диапазона включительно указанных границ */
+
+
+SELECT *
+    FROM my_contacts
+        WHERE zarplata = 10
+            OR zarplata = 100;
+
+SELECT *
+    FROM my_contacts
+        WHERE zarplata
+            IN (10,100);        /* должно выполниться одно из условий (или 20, или 100, или ВСЕ) */
+
+SELECT *
+    FROM my_contacts
+        WHERE zarplata
+            NOT IN (10,100);   /* если ячека столбца содержит (значение) то запись не включается в результат запроса */
+
+
+/* AND NOT */
+/* Задача: показать записи, которые > 20, но не равняются 100 */
+SELECT *
+    FROM my_contacts
+        WHERE zarplata > 20
+            AND NOT zarplata = 100;
+
+/* OR NOT */
+/* Задача: зарплата >70 или те записи где нет Leo */
+SELECT *
+    FROM my_contacts
+        WHERE zarplata > 70
+            OR NOT first_name = 'leo';
+
+
+/* WHERE NOT */
+/* Задача: показать всё что не входит в ЭТОТ (30-40) диапазон  */
+SELECT *
+    FROM my_contacts
+        WHERE NOT zarplata
+            BETWEEN 30 AND 40;
+
+DELETE
+    FROM my_contacts     /* удаление записей, содержащих в столбце  last_name  значенин 'Kozyrev'*/
+        WHERE last_name = 'Kozyrev'; 
     
     
     
