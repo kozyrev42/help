@@ -158,10 +158,16 @@ SELECT *
         WHERE NOT zarplata
             BETWEEN 30 AND 40;
 
+
+
 DELETE
-    FROM my_contacts     /* удаление записей, содержащих в столбце  last_name  значенин 'Kozyrev'*/
+    FROM my_contacts                    // удаление записей, содержащих в столбце  last_name  значенин 'Kozyrev'
         WHERE last_name = 'Kozyrev'; 
     
     
     
+    
+UPDATE my_contacts                      //   в таблице my_contacts 
+    SET zarplata = 50                   //   в столбце 'zarplata' заменяем значение на 25 
+        WHERE first_name = 'Leo';       //   при выполнении этого условия   
     
