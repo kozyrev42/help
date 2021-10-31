@@ -1,0 +1,765 @@
+// ОПЕРАТОРЫ
+=        - равно
+<>       - не равно
+<        - меньше
+>        - больше
+<=       - меньше-или-равно
+>=       - больше-или-равно
+
+AND      - оператор "И",  например объединяет условия выборки
+OR       - оператор "ИЛИ" (или 1, или 2, или 3, или ВСЕ)
+LIKE     - даёт возможность поиска по части тескстовой строки
+BETWEEN  -  BETWEEN 30 AND 40; Установка диапазона включительно указанных границ 
+IN       -  IN (10,100);     должно выполниться одно из условий (или 10, или 100, или ВСЕ)
+AND NOT  - 
+
+
+
+// БАЗА
+CREATE DATABASE my_db;      // команда создаёт новую базу данных с именем: my_db
+DROP DATABASE my_db;        // удаление базы my_db
+USE my_db;                  // команда для консоли, чтобы дать консоли управление базой 
+
+show databases;             // в консоле, показать все базы данных
+show tables;                // в консоле, показать все таблицы в текущей базе
+
+
+
+
+// ТИПЫ ДАННЫХ
+CHAR     - (CHARACTER) - требует чтобы данные имели фиксированную длинну    -> CHAR(1)  ->  Y
+VARCHAR  - хранит текстовые данные длинной до 255 символов, легко приспосабливается к переменной длине даных (строковые операции)  -> VARCHAR(30) -> text 30 сим
+BLOB     - работает с большими блоками текстовых данных (можно > 255 символов), тип ограничен в операциях
+
+INT      - (INTEGER) (значения 'без') числа обязательно целые (положительные или отрицательные)    -> INT -> 89001001100
+DEC      - (DECIMAL) (значения 'без') обеспечивает хранение чисел с заданной точностью:            -> DEC(4,2) -> 1234,12
+
+TIME     - работает только со временем
+DATE     - хранит даты, на время не обращает внимание
+DATETIME - хранит дату и время
+
+
+
+
+// ТАБЛИЦЫ
+
+CREATE TABLE my_contacts
+    (
+        last_name VARCHAR(20) NOT NULL,               // запись не создаться, без задания значения 
+        first_name VARCHAR(20) NOT NULL,
+        years INT,                                    // в ячейки будет выводиться NULL, если не будет задано значение
+        zarplata DEC(6,2) NOT NULL DEFAULT 0.00       // без явного задания значения, по умолчанию значение будет 0.00
+    );
+
+DROP TABLE ponchik_list;    // удаление таблицы 
+
+DESC my_contacts;           // команда для вывода описания таблицы
+
+INSERT INTO my_contacts (           // добавление в строки
+        last_name, first_name, email, birthday
+    )
+VALUES (
+        'Kozyrev', 'Alex', '@gmail.com', '1992-04-09'
+);
+
+
+INSERT INTO my_contacts    // добавление строки без указания столбцов
+VALUES (
+        'Ban', 'Aflik', '@gmail.com', '1970-05-05'
+);
+    
+
+INSERT INTO my_contacts (       // добавление строки, без некоторых столбцов 
+        last_name, birthday     // заполняются не все ячейки
+    )
+VALUES (
+        'Kozyrev', '1992-04-09'
+);
+    
+    
+    
+    
+ // ВЫБОРКА
+ 
+SELECT * FROM my_contacts;            // чтение всей таблицы  
+    
+SELECT * 
+    FROM my_contacts                  //   вывод тех строк, при условии что столбец last_name содержит 'Obama' 
+        WHERE last_name = 'Obama';    //   WHERE - ключевое слово, после которого следует условие
+                                    
+SELECT first_name                     // вывод только одного столбца */
+    FROM my_contacts
+        WHERE first_name = 'Alex';   
+    
+SELECT *           
+    FROM my_contacts
+        WHERE first_name = 'Leo'
+            AND zarplata > 35;         // оператор AND - объединяет 2 условия выбокри     
+    
+SELECT *           
+    FROM my_contacts
+        WHERE zarplata = 10
+            OR zarplata => 35;          // вывод строк - удовлетворяущих любое из указанных условий    
+    
+SELECT *           
+    FROM my_contacts
+        WHERE years IS NULL;      /* вывод строк содержащие NULL */
+
+SELECT *           
+    FROM my_contacts
+        WHERE years IS NOT NULL;      /* вывод строк НЕ содержащие NULL */
+
+
+SELECT *           
+    FROM my_contacts                    /* LIKE - даёт возможность поиска по части тескстовой строки */
+        WHERE first_name LIKE '%o';      /* % - значит может быть любое количество символов перер буквой о */      
+
+SELECT *
+    FROM my_contacts
+        WHERE zarplata
+            BETWEEN 30 AND 40;      /* Установка диапазона включительно указанных границ */
+
+
+SELECT *
+    FROM my_contacts
+        WHERE zarplata = 10
+            OR zarplata = 100;
+
+SELECT *
+    FROM my_contacts
+        WHERE zarplata
+            IN (10,100);        /* должно выполниться одно из условий (или 20, или 100, или ВСЕ) */
+
+SELECT *
+    FROM my_contacts
+        WHERE zarplata
+            NOT IN (10,100);   /* если ячека столбца содержит (значение) то запись не включается в результат запроса */
+
+
+/* AND NOT */
+/* Задача: показать записи, которые > 20, но не равняются 100 */
+SELECT *
+    FROM my_contacts
+        WHERE zarplata > 20
+            AND NOT zarplata = 100;
+
+/* OR NOT */
+/* Задача: зарплата >70 или те записи где нет Leo */
+SELECT *
+    FROM my_contacts
+        WHERE zarplata > 70
+            OR NOT first_name = 'leo';
+
+
+/* WHERE NOT */
+/* Задача: показать всё что не входит в ЭТОТ (30-40) диапазон  */
+SELECT *
+    FROM my_contacts
+        WHERE NOT zarplata
+            BETWEEN 30 AND 40;
+
+
+
+DELETE
+    FROM my_contacts                    // удаление записей, содержащих в столбце  last_name  значенин 'Kozyrev'
+        WHERE last_name = 'Kozyrev'; 
+    
+    
+    
+    
+UPDATE my_contacts                      //   в таблице my_contacts 
+    SET zarplata = 50                   //   в столбце 'zarplata' заменяем значение на 25 
+        WHERE first_name = 'Leo';       //   при выполнении этого условия   
+    
+UPDATE my_contacts
+    SET first_name = 'Luk', zarplata = 25     //   замена нескольких столбцов в записи 
+        WHERE last_name = 'Li';    
+    
+UPDATE my_contacts
+    SET zarplata = 10;          /* назначение значния для всего столбца */
+
+UPDATE my_contacts
+    SET zarplata = zarplata + 1;        /* увеличение текущего значения на 1 */  
+    
+    
+    
+
+CREATE TABLE my_contacts
+    (
+        id INT NOT NULL AUTO_INCREMENT,             //   поле хранит целые числа, NULL - быть не может 
+        last_name VARCHAR(20) NOT NULL,             //   AUTO_INCREMENT - авто-назначение первичного ключа 
+        first_name VARCHAR(20) NOT NULL,
+        zarplata DEC(6,2) NOT NULL DEFAULT 0.00,
+        PRIMARY KEY (id)                            //   назначается столбец, который будет хранить первичные ключи */
+    );
+
+ALTER TABLE my_contacts             /* Изменить таблицу -> дабавить колонку 'nomer' первым в таблице */
+    ADD COLUMN nomer INT FIRST;
+
+
+
+ALTER TABLE my_contacts             
+    ADD COLUMN telefon INT          /* добавление новой колонки 'telefon' */
+        AFTER zarplata;             /* указание поля после которого, должно следовать новое поле */
+
+
+ALTER TABLE my_conts
+    DROP COLUMN city_state;            /*  удаление колонки city_state  */
+
+
+ALTER TABLE my_tablr             /* переименование таблицы */
+    RENAME TO my_table;             /* RENAME TO - ключевое слово для переименования */
+
+
+ALTER TABLE my_conts                            /* переименование колонки  */
+    CHANGE COLUMN zarplata zarp DECIMAL(6,2);   /* zarplata - поле которое нужно переименовать */
+                                                /* zarp - новое название поля */
+
+ALTER TABLE my_conts                    /* изменение типа данных поля */
+    MODIFY COLUMN zarp VARCHAR(20);
+
+
+
+SELECT RIGHT (city_state, 2) FROM my_conts;       /* выделение символов от правого края, 2 - количество выделяемых символов */
+
+SELECT SUBSTRING_INDEX (city_state, ',' , 1) FROM my_conts;   /* выделение текста от левого края до символа ","; 1 - ищется первая запятая в тексте */  
+
+
+
+
+/* копи-вставка 2 символов из поля city_state -> в поле _state*/
+UPDATE my_conts     
+    SET _state = RIGHT (city_state, 2);
+
+/* копи-вставка всех символов слева до первой запятой city_state -> в поле _city */
+UPDATE my_conts
+    SET _city = SUBSTRING_INDEX (city_state, ',' , 1);
+
+
+
+/*  6  ГЛАВА */
+
+/*  создадим таблицу */
+CREATE TABLE my_table
+    (
+        pole_1 VARCHAR(10),     
+        pole_2 VARCHAR(10),
+        pole_new VARCHAR(10)
+    );
+
+
+
+SELECT * FROM my_table;
+
+INSERT INTO my_table (           /* добавление в строки */
+        pole_1, pole_2, zarplata
+    )
+VALUES (
+        'D', 'C', 4
+);
+
+
+/* работает как условный оператор */
+UPDATE my_table
+    SET pole_new =          /* в поле будут добавленны данные, в зависимости от условий */
+        CASE
+            WHEN pole_2 = 'A'   /* если условие выполняется */
+                THEN 'new_A'    /* тогда ЭТО */
+            WHEN pole_2 = 'B'   /* проверка по второму условию */
+                THEN 'new_B'
+            ELSE 'new_D'        /* если не одно из условий не выполняется, то 'new_D'  */
+        END;
+        
+
+/* Проверка одной записи по двум условиям */
+UPDATE my_table
+    SET pole_new =          
+        CASE
+            WHEN pole_1 = 'CC'  AND  pole_2 = 'CC'   /* должны выполнится 2 условия */
+                THEN 'new_CC'    
+            ELSE 'new_D'        
+        END;
+
+/* применение условия + сортировки по алфавиту по столбцу 'pole_2' */
+SELECT * 
+    FROM my_table
+        WHERE pole_new = 'new_D'
+        ORDER BY pole_2;
+
+
+/*  применение Двух сортировок одновременно */
+SELECT * 
+    FROM my_table
+        ORDER BY pole_2, pole_1;  /* указан порядок сортировки, сначала по 'pole_2' */
+
+
+/* DESC -> сортировка в обратном порядке */
+SELECT * 
+    FROM my_table
+        ORDER BY pole_2 DESC;   /* DESC -> для обратной сортировки */
+
+
+/* SUM -  функция сумирования */
+SELECT SUM(zarplata)
+    FROM my_table;
+
+
+/* Сумма + условие суммирования */
+SELECT SUM(zarplata)
+    FROM my_table
+        WHERE pole_2 = 'A';
+
+/* Суммирование по группа */
+SELECT pole_2, SUM(zarplata)
+    FROM my_table
+        GROUP BY pole_2;        /* команда находит одинаковые значения, объединяет их в группы, и суммирует значения поля zarplata, по этим группам */
+
+
+/*  AVG - функция вычисляет среднее значение */
+SELECT AVG(zarplata)
+    FROM my_table;
+
+
+/* Среднее значение по группам */
+SELECT pole_2, AVG(zarplata)
+    FROM my_table
+        GROUP BY pole_2; 
+
+/* возвращает НАИБОЛЬШЕЕ значение в столбце */
+SELECT MAX(zarplata)
+    FROM my_table;
+
+/* возвращает НАИМЕНЬШЕЕ значение в столбце */
+SELECT MIN(zarplata)
+    FROM my_table;
+
+
+/*  COUNT - возвращает количество записей в столбце */
+SELECT COUNT(zarplata)
+    FROM my_table;
+
+
+/* DISTINCT  ->  возвращает только уникальные значения без дубликатов  */
+SELECT DISTINCT zarplata
+    FROM my_table;
+
+
+/* Команда возвращает количество уникальных значений */
+SELECT COUNT(DISTINCT zarplata)
+    FROM my_table;   
+
+
+SELECT pole_2, SUM(zarplata)
+    FROM my_table
+        GROUP BY pole_2            /* суммируем по группам */
+        ORDER BY zarplata DESC     /* сортируем по убыванию */
+        LIMIT 0,1;                 /* выводим с первой записи, выводим одну запись */
+
+
+
+/*  7  Глава */
+
+SELECT * FROM my_conts;
+SELECT * FROM adress;
+
+
+DESC my_conts; 
+DESC adress;
+
+
+/*  Таблицы с внешним ключом */
+CREATE TABLE adress
+    (
+        adres_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,      
+        city_state VARCHAR(20) ,     
+
+        cont_id INT NOT NULL,             /* создание поля ВНЕШНИХ ключей */   
+        CONSTRAINT my_conts_cont_id_fk     /* ограничению - присваевается имя по которому можно определить, из какой таблицы взят ключ */
+        FOREIGN KEY (cont_id)             /* явное назначение внешнего ключа */
+        REFERENCES my_conts(cont_id)       /* установление связи с родительской таблицей-колонкой */
+    );
+
+
+/* UPDATE my_conts
+    SET conts_id = 103
+        WHERE first_name = 'Bob'; */
+
+
+
+/* Целостность данных */
+INSERT INTO adress (           /* добавление в строки */
+         city_state, cont_id
+    )
+VALUES (
+         'piter, LO', 99   /* вставка записи не происходит, так как */
+);                         /* в первичном ключе нет ключа "99" */
+
+
+
+
+
+/* 8 глава */
+
+SELECT * FROM my_conts;
+SELECT * FROM adress;
+SELECT * FROM table_city;    
+
+DESC my_conts;    DESC adress;   DESC table_city;
+
+
+/* INSERT INTO adress (           
+         city_state, cont_id
+    )
+VALUES (
+         'siba, NO', 103  
+); 
+ */
+
+
+ALTER TABLE adress             
+    ADD COLUMN interes_4 VARCHAR(20); 
+
+
+UPDATE adress
+    SET  interess = `odin, dva, tri, chetyre`
+        WHERE adres_id = 1;
+
+
+/* копи-вставка в одной команде */
+UPDATE adress
+    SET interes_4 = SUBSTRING_INDEX (interess, ',' , 1);
+
+
+/* функция отрезает первую часть текста (описанную в круглых скобках), остаток вставляем куда мы укажем после SET */
+UPDATE adress
+    SET interess = SUBSTR(interess, LENGTH(interes_3)+2);
+
+
+CREATE TABLE table_city
+    (
+        id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        city VARCHAR(15)
+    );
+
+/* заполняем поле (делаются новые записи) данными -> из другого поля, другой таблицы*/
+INSERT INTO table_city (city)
+    /* далее пишем чем заполняем */
+    SELECT _city FROM my_conts
+    GROUP BY _city;                   /* группируем дубликаты */
+
+
+/* Создание таблицы с единственным столбцом который копируется из другой таблицы */
+CREATE TABLE table_city AS
+    SELECT _city FROM my_conts;
+
+
+/*  Создание таблицы с 2-мя полями, первое поле автозаполнение, второе поле заполняет командам AS */
+CREATE TABLE table_city
+    (
+        id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        _city VARCHAR(15)
+    )  AS                   /* AS - заполняет новую таблицу результатами SELECT */
+        SELECT _city FROM my_conts;
+
+
+
+/*  Назначение новому столбцу, в новой таблице ПСЕВДОНИМА */
+CREATE TABLE table_city
+    (
+        id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        _city VARCHAR(10)    /* для нового столбца - назначается ПСИВДОНИМ  mc_city*/
+    )  AS                   /* AS - заполняет новую таблицу результатами SELECT */
+        SELECT _city FROM my_conts AS mc   /* AS ms - назначение псевдонима таблицы */
+        GROUP BY _city;
+
+
+
+
+/* Перекрестное соединение */
+SELECT my_conts.first_name, my_table.pole_2
+    FROM my_conts CROSS JOIN my_table;
+
+/* Перекрестное соединение (используются псевдонимы  -> AS ms)*/
+SELECT mc.first_name, mt.pole_2
+    FROM my_conts AS mc CROSS JOIN my_table AS mt;
+
+
+
+/*  Внутреннее соединение */
+/*  Эквивалентное  */
+SELECT my_conts.last_name, adress.city_state      /* вывод 2 полей из разных таблиц */
+    FROM my_conts INNER JOIN adress               /* вывод полей будет из двух таблиц */
+        ON my_conts.cont_id = adress.cont_id;     /* вывод записей, если выполняется условие (первичный ключ из одной таблицы -> совпадает с внешним ключом другой таблицы )  */
+
+/*  НЕэквивалентное соединение */
+SELECT my_conts.last_name, adress.city_state      /* вывод 2 полей из разных таблиц */
+    FROM my_conts INNER JOIN adress               /* вывод полей будет из двух таблиц */
+        ON my_conts.cont_id <> adress.cont_id;      /*  вывод тех записей -> ключи которых не совпадают */
+
+
+/*  Натуральное соединение */
+SELECT my_conts.last_name, adress.city_state      /*   связывает по значениям одноименных столбцов, выводит записи с равными значениями в этих столбцах(по id)  */
+    FROM my_conts NATURAL JOIN adress;
+
+
+
+
+
+/*  9  глава */
+/* Задача вывести запись с фамилией и зарплатой (максимальной зарплатой) */
+
+SELECT my_conts.last_name, adress.zarplata                  /* вывод 2 полей из разных таблиц */
+    FROM my_conts NATURAL JOIN adress                       /* связывает по значениям одноименных столбцов */
+        WHERE adress.zarplata = (SELECT MAX(adress.zarplata) FROM adress);  
+
+
+
+
+
+/* 10 глава  */
+
+SELECT * FROM girls;
+SELECT * FROM toys;
+
+DESC girls; DESC toys;
+
+
+/* создал таблицу с внешним ключом */
+CREATE TABLE girls
+    (
+        girls_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,      
+        names VARCHAR(20) ,     
+
+        toy_id INT,             /* создание поля ВНЕШНИХ ключей */   
+        CONSTRAINT toys_toy_id_fk     /* ограничению - присваевается имя по которому можно определить, к какой таблицы-полю привязывается вн-ключ */
+        FOREIGN KEY (toy_id)             /* явное назначение внешнего ключа */
+        REFERENCES toys(toy_id)       /* установление связи с родительской таблицей-колонкой для этого внешнего ключа */
+    );
+
+
+/*  Левое Внешнее Соединение */
+SELECT girls.names , toys.toy
+    FROM girls LEFT OUTER JOIN toys     /* Левой внешнее соединение возращает записи всей Левой таблицы независимо если совпадения или нет */
+        ON girls.toy_id = toys.toy_id;
+
+
+/*  12 глава */
+
+SELECT * FROM mysql.user;       /*  команда возвращает пользователей + разрешения */
+
+
+/* смена пароля */
+/* SET PASSWORD FOR 'root'@'localhost'=PASSWORD('asd1234'); */
+
+
+/* создание нового пользователя */
+/* CREATE USER sasha
+    IDENTIFIED BY 'zxc123'; */
+
+GRANT SELECT ON      /*  разрешение на SELECT */
+    girls            /*  поле которое можно SELECT */
+    TO sasha;        /*  пользователь которому дано разрешение */
+
+
+GRANT SELECT ON      /*  разрешение на SELECT */
+    my_koz.*         /*  * - значит что все таблицы в БД my_koz  */
+    TO sasha;
+
+
+
+
+
+
+
+
+
+
+
+
+/* Подготовка к тесту */
+DESC `список`; DESC `зарплата`;
+
+
+SELECT * FROM `список`;
+SELECT * FROM `зарплата`;
+SELECT * FROM `хобби`;
+
+
+INSERT INTO `список` (           
+        `фамилия`,`имя`,`зарплата`,`хобби`
+    )
+VALUES (    'Рез','Леха',3000,'пиво'   );
+
+INSERT INTO `список` (           
+        `id`,`фамилия`,`имя`
+    )
+VALUES (    5,'Гуд','Коля'  );
+
+
+
+
+/* создал корневую таблицу */
+CREATE TABLE `список`
+    (
+        `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,      
+        `фамилия` VARCHAR(20) CHARACTER SET utf8,     
+        `имя` VARCHAR(20) CHARACTER SET utf8,
+        `зарплата` INT,
+        `хобби` VARCHAR(20) CHARACTER SET utf8
+    );
+
+
+/* удаление колонки */
+ALTER TABLE `список`
+    DROP COLUMN `хобби`;
+
+
+/* 1 - таблица с внешним ключом */
+CREATE TABLE `зарплата`
+    (
+        `id` INT NOT NULL, 
+        CONSTRAINT `список-зарплата`           /* ограничению - присваевается имя по которому можно определить, к какой таблицы-полю привязывается вн-ключ */
+        FOREIGN KEY (`id`)              /* явное назначение внешнего ключа */
+        REFERENCES `список`(`id`),       /* установление связи с родительской таблицей-колонкой */
+
+
+        `зарплата` VARCHAR(20) CHARACTER SET utf8
+    );
+
+
+/* 2 - таблица с внешним ключом */
+CREATE TABLE `хобби`
+    (
+        `id` INT NOT NULL, 
+        CONSTRAINT `список-хобби`           /* ограничению - присваевается имя по которому можно определить, из какой таблицы взят ключ */
+        FOREIGN KEY (`id`)              /* явное назначение внешнего ключа */
+        REFERENCES `список`(`id`),       /* установление связи с родительской таблицей-колонкой */
+
+
+        `хобби` VARCHAR(20) CHARACTER SET utf8
+    );
+
+
+
+/* перенос столбцов (id и зарплата) в таблицу зарплата */
+/* копи-вставка 2 столбцов из корневой в дочернюю*/
+INSERT INTO `зарплата` (`id`,`зарплата`)    /* заполняемая таблица(заполняемые колонки)  */
+    /* далее пишем чем заполняем */
+    SELECT `id`,`зарплата` FROM `список`;
+
+
+
+
+/* натуральное соединение, соединяет если у записей совпадают ID */ 
+SELECT `список`.`фамилия`, `зарплата`.`зарплата`     
+    FROM `список` NATURAL JOIN `зарплата`; 
+
+
+
+/*  вывод 4 полей из 3 разных таблиц */
+SELECT `список`.`id`,
+       `список`.`фамилия`,      /* выводимые поля */
+       `зарплата`.`зарплата`,
+       `хобби`.`хобби`    
+    FROM
+    `список` NATURAL JOIN       /* таблицы из которых вывод полей */
+    `зарплата` NATURAL JOIN
+    `хобби`;
+
+
+
+
+/* эквивалентное */
+SELECT `список`.`фамилия`, `зарплата`.`зарплата`      /* вывод 2 полей из разных таблиц */
+    FROM `список` INNER JOIN `зарплата`               /* вывод полей будет из двух таблиц */
+        ON `список`.`id` = `зарплата`.`id`;           /* вывод записей, если выполняется условие (первичный ключ из одной таблицы -> совпадает с внешним ключом другой таблицы )  */
+
+
+/* вывод двух столбцов из одной таблицы */
+SELECT `фамилия`,`имя`          
+    FROM `список`
+        WHERE `id`= 2;
+
+
+
+
+
+
+
+/* проба */
+DESC `реестр`;
+
+/* создание таблицы */
+CREATE TABLE `реестр`(  
+    `ид` int NOT NULL primary key AUTO_INCREMENT ,
+    `дата_отправления` DATE,
+    `код_груза` INT, 
+    `тип_груза` varchar(100),
+    `отправитель` varchar(100),
+    `получатель` varchar(100)
+) default charset utf8;
+
+
+
+/* создаём дочернюю таблицу */
+CREATE TABLE `код_тип_груза`(  
+    `ид_код_тип_груза` int NOT NULL primary key AUTO_INCREMENT ,
+    `код_груза` INT, 
+    `тип_груза` varchar(100)
+) default charset utf8;
+
+
+/* заполняем дочернюю таблицу Двумя столбцами из родительской */
+INSERT INTO `код_тип_груза` (`код_груза`,`тип_груза`)
+    SELECT `код_груза`,`тип_груза` FROM `реестр`
+        GROUP BY `код_груза`
+        ORDER BY `код_груза`
+;
+
+
+/* создаём поле в родителе, для последующего назначения внешнем ключом  */
+ALTER TABLE `реестр`
+    ADD COLUMN `ид_код_тип_груза` INT AFTER `дата_отправления`;
+
+
+/* добавление ограничения на колонку */
+ALTER TABLE `реестр`
+    ADD CONSTRAINT `код_тип_груза`  /* имя ограничения беру по имени дочерней таблицы(хотя с пер.ключом) */
+    FOREIGN KEY (`ид_код_тип_груза`)
+    REFERENCES `код_тип_груза`(`ид_код_тип_груза`)
+;
+
+
+/* заполним поле Реестра ид_код_тип_груза согласно справочнику  */
+/* использую Внутреннее соединение */
+UPDATE `реестр`,`код_тип_груза`
+    SET `реестр`.`ид_код_тип_груза`=`код_тип_груза`.`ид_код_тип_груза`
+        WHERE `реестр`.`код_груза`=`код_тип_груза`.`код_груза`
+;
+
+/* удалим лишнее поле в Реестре (которое уже есть в справочнике) */
+ALTER TABLE `реестр`
+    DROP COLUMN `тип_груза`;
+
+
+/* посмотрим сводную */
+SELECT `реестр`.`ид`,           /* таблица.поле */
+       `реестр`.`дата_отправления`,      /* выводимые поля */
+       `код_тип_груза`.`код_груза`      /* выводит благодаря связи */
+    FROM
+    `реестр` NATURAL JOIN       /* таблицы из которых вывод полей */
+    `код_тип_груза`
+    ORDER BY `ид`;
+
+
+
+
+
+/* добавление записей */
+INSERT INTO `реестр` (           
+        `дата_отправления`,`код_груза`,`тип_груза`,`отправитель`,`получатель`
+    ) VALUES
+    ('2017-07-01',31607,'Лом черных металлов,не поименованный в алфавите','ФИЛИАЛ  ВЭЙ В Г.ЧИТЕ ООО','ВЛАДИВОСТОКСКИЙ МОРСКОЙ РЫБНЫЙ ПОРТ ОАО'),
+    ('2017-07-01',31607,'Лом черных металлов,не поименованный в алфавите','ФИЛИАЛ  ВЭЙ В Г.ЧИТЕ ООО','ВЛАДИВОСТОКСКИЙ МОРСКОЙ ТОРГОВЫЙ ПОРТ ОАО'),
+    ('2017-07-01',31603,'Лом и отходы стальные негабаритные','МЕЖДУРЕЧЬЕ ОАО','ЕВРАЗ ОБЪЕДИНЕННЫЙ ЗАПАДНО-СИБИРСКИЙ МЕТАЛЛУР ОАО'),
+;
