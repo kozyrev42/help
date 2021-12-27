@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title> Отправка письма </title>
+	<style> /* @import "css-file.css"; */ </style>
+</head>
+<body>
+
+<br/>
+<div id='sis'> Введите Ваше сообщение и адрес эектронной почты для ответа Вам<br/></div>
+<br/>
+
+<form method = "post" action="otpr_email.php">	<!-- для значение action="" - пишим путь-назначение для отправляемой формы, при событии `submit` -->
+											<!-- "report.php" - сценарий который будет запущен на сервере для обработки формы -->				
+																
+	<label for="textEmail"> Ваше сообщение</label>				        <!-- просто тэг с текстом -->
+	<input type="text" name="textEmail" id="textEmail" />	<!-- в Массив $_POST сохраниться значение input`a, в ячейку с ключем "youname" -->
+		<br/>												    <!-- name="youname" - будет являтся ключом для доступа к данных из Массиве $_POST -->
+		<br/>
+	<label for="email">Ваш @mail:</label>
+	<input type="text" name="email" id="email" />
+		<br/>
+		<br/>
+	<input id="submit" name="submit" type="submit"  value="Отправить"/>
+</form>
+
+
+<script type="text/babel">
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+// php - script
+
+<html>
+    <head>
+    <meta charset="UTF-8">
+    <title> Отправка сообщения </title>
+    </head>
+
+<body>
+
+<?php       /* задача сценария Обработать данные формы, и добавить их в лист рассылки (сохранить в БД), и вывести данные из таблицы */                                                
+    
+    //$host = '127.0.0.1';    // адрес сервера БД
+    //$user = 'root';         // пользователь БД
+    //$password = '';         // пароль
+    //$db_name = 'php';    // имя БД
+    
+    /*  в этот файл.php был направлен массив методом POST  */
+    $text_Email = $_POST['textEmail'];                          /*  достаём из массива $_POST данные, и определяем Их Переменной */                            
+    $email = $_POST['email'];                                   // изолируем данные из формы, для дальнейшей работы с ними
+    
+    echo 'Текст сообщения: '. $text_Email .'<br/>';                       
+    echo 'Ваш email: '. $email . '<br/>';
+
+?>
+
+</body>
+</html>
