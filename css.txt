@@ -40,12 +40,17 @@ h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight: 400;}
 
 
 
-/* селектор "div.className" преоритетней несмотря на то что "div" ниже по каскаду */
+/* селектор "div.className" преоритетней несмотря на то что "div" и ".className" Ниже по Каскаду */
 /* обращение ко всем "div" с классом "className" */
 div.className {
-    color: #000000;
+    color: green;
 }
+/* обращение ко всем "div" */
 div {
     font-size: 30px;
     color: blue;
+}
+/* обращение ко всем элементам с классом ".className"  */
+.className {
+    color: black;
 }
