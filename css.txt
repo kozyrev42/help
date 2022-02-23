@@ -9,6 +9,7 @@
 }
 
 /* свойство box-sizing определяет как вычисляется общая ширина и высота элемента */
+/* box-sizing: border-box; - при таком значении выс и шир блока будет такой, какой ты укажешь в height и width */
 *,*:before,*:after{
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
