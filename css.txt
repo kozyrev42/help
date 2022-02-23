@@ -54,3 +54,18 @@ div {
 .className {
     color: black;
 }
+
+
+
+/* только "span" в классе "className" окрасится в Зелёный цвет, а не все "span"-ы на странице */
+span {
+    color: blue;
+}
+
+.className {
+    color: black;
+}
+
+.className span {
+    color: green;
+}
