@@ -1,20 +1,28 @@
 
-/*Обнуление*/
+/* ___Обнуление____*/
+
+/* Обнуление отступов и границ у всех тегов */
 *{
 	padding: 0;
 	margin: 0;
 	border: 0;
 }
+
+/* свойство box-sizing определяет как вычисляется общая ширина и высота элемента */
 *,*:before,*:after{
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 }
+
+/* убираем линии обводки */
 :focus,:active{outline: none;}
 a:focus,a:active{outline: none;}
 
+/* делаем элементы блочными */
 nav,footer,header,aside{display: block;}
 
+/* уравниваем поведение шрифтов */
 html,body{
 	height: 100%;
 	width: 100%;
@@ -25,8 +33,11 @@ html,body{
 	-moz-text-size-adjust: 100%;
 	-webkit-text-size-adjust: 100%;
 }
+
+/* чтобы Элементы наследовали семейство Шрифта */
 input,button,textarea{font-family:inherit;}
 
+/* разное */
 input::-ms-clear{display: none;}
 button{cursor: pointer;}
 button::-moz-focus-inner {padding:0;border:0;}
@@ -35,6 +46,7 @@ a:hover{text-decoration: none;}
 ul li{list-style: none;}
 img{vertical-align: top;}
 
+/* уравниваем все h-ы, чтобы самим управлять их размерами  */
 h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight: 400;}
 /*--------------------*/
 
