@@ -15,7 +15,9 @@
 //  > git add .         сканируем все изменения 
 //  > git commit -m "first-commit"      фиксируем все изменения, "first-commit" - наименование коммита
 //  > git remote add origin https://github.com/kozyrev42/git-help.git       при первой отправки
+//  > git remote add origin git@github.com:kozyrev42/php_head_4.git
 //  > git push -u origin master         отправка, при первой отправки
+//  > git push                          при последующих отправках
 
 //  при последующих отправках
 //  > git add .        
