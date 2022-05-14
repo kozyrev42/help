@@ -31,3 +31,4 @@
 
 //  копирование проекта с GitLab
 //  git clone /*адрес проекта копируется с проекта*/ -b /*название копируемой ветки*/
+//  git clone git@github.com:kozyrev42/php_head_4.git -b master
