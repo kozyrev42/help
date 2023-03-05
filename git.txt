@@ -32,3 +32,10 @@
 //  копирование проекта с GitLab
 //  git clone /*адрес проекта копируется с проекта*/ -b /*название копируемой ветки*/
 //  git clone git@github.com:kozyrev42/php_head_4.git -b master
+
+
+// решение проблемы с LF/CRLF
+// выполняем команду, чтобы перевод строк преобразовывался к LF
+// git config --local core.autocrlf input                               // локальный репо
+// git config --global core.autocrlf input                              // глобально
+// git config core.autocrlf                                             // проверка статуса      
